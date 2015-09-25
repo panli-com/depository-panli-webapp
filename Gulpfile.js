@@ -21,12 +21,6 @@ var sass = require('gulp-sass'),
     livereload = require('gulp-livereload'),
     port = process.env.port || 5000;
 
-// 检查脚本
-//gulp.task('lint', function() {
-//    gulp.src('./js/*.js')
-//        .pipe(jshint())
-//        .pipe(jshint.reporter('default'));
-//});
 
 // Static server
 gulp.task('browser-sync', function() {
@@ -48,7 +42,7 @@ gulp.task('connect',function(){
 
 // reload Js
 gulp.task('js',function(){
-    gulp.src('./dist/**/*.js')
+    gulp.src('./dist/webapp/**/*.js')
         .pipe( connect.reload() )
 })
 
@@ -58,89 +52,45 @@ gulp.task('html',function(){
         .pipe( connect.reload() )
 });
 
-//react 编译
 
-/*gulp.task('react', function () {
-    return gulp.src('./src/login/js/main.js')
-        .pipe(browserify({
-            transform: 'reactify',
-        }))
-        .pipe(gulp.dest('./dist/login/js'));
-});*/
 
 // reload Js
 gulp.task('js',function(){
-    gulp.src('./dist/**/js/*.js')
+    gulp.src('./dist/webapp/**/js/*.js')
         .pipe( connect.reload() )
         .pipe(notify({ message: 'reload Js Ok' }));
 })
 //编译Sass，Autoprefix及缩小化
 gulp.task('common', function() {
-    return gulp.src('./src/common/scss/panli.scss')
+    return gulp.src('./src/webapp/common/scss/panli.scss')
         .pipe(sass({ style: 'expanded' }))
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('dist/common/css'))
-        .pipe(rename( 'layer.css'))
+        .pipe(gulp.dest('dist/webapp/common/css'))
+        .pipe(rename({suffix: '.min'}))
         .pipe(minifycss())
-        .pipe(gulp.dest('dist/common/js/skin'))
+        .pipe(gulp.dest('dist/webapp/common/js/skin'))
         .pipe( connect.reload() )
         .pipe(notify({ message: 'Styles Common task complete' }));
-        /* gulp.src('./src/login/scss/!*.scss')
-        .pipe(sass({ style: 'expanded' }))
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('dist/login/css'))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(minifycss())
-        .pipe(gulp.dest('dist/login/css'))
-        .pipe(notify({ message: 'Styles task complete' }));*/
-});
-
-//编译Sass，Autoprefix及缩小化
-gulp.task('login', function() {
-    return gulp.src('./src/login/scss/login.scss')
-        .pipe(sass({ style: 'expanded' }))
-        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('dist/login/css'))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(minifycss())
-        .pipe(gulp.dest('dist/login/css'))
-        .pipe( connect.reload() )
-        .pipe(notify({ message: 'Styles Login task complete' }));
 
 });
+
+
 
 gulp.task('scripts', function() {
-     gulp.src('./src/common/js/*.js')
+     gulp.src('./src/webapp/common/js/*.js')
         .pipe(concat('panli.js'))
-        .pipe(gulp.dest('dist/common/js'))
+        .pipe(gulp.dest('dist/webapp/common/js'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())
-        .pipe(gulp.dest('dist/common/js'))
+        .pipe(gulp.dest('dist/webapp/common/js'))
         .pipe(notify({ message: 'Scripts common task complete' }));
 
 
 });
 
-gulp.task('indexJs',function(){
-    gulp.src('./src/index/js/*.js')
-        .pipe(concat('panIndex.js'))
-        .pipe(gulp.dest('dist/common/js'))
-        .pipe(rename({suffix: '.min'}))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/common/js'))
-        .pipe( connect.reload() )
-        .pipe(notify({ message: 'Scripts index task complete' }));
-});
 
-// 合并，压缩文件
-/*gulp.task('js', function() {
-    gulp.src('./src/js/!*.js')
-        .pipe(concat('panli.js'))
-        .pipe(gulp.dest('./dist'))
-        .pipe(rename('panli.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./dist/js'));
-});*/
+
+
 
 // 默认任务
 gulp.task('default', function(){
@@ -160,17 +110,17 @@ gulp.task('default', function(){
 gulp.task('watch', function() {
 
     // 看守所有.scss档
-    gulp.watch('src/common/scss/*.scss', ['common']);
-    gulp.watch('src/login/scss/*.scss', ['login']);
+    gulp.watch('src/webapp/common/scss/*.scss', ['common']);
+    gulp.watch('src/webapp/login/scss/*.scss', ['login']);
 
     // 看守所有.组件
-    gulp.watch('src/common/js/*.js', ['scripts']);
+    gulp.watch('src/webapp/common/js/*.js', ['scripts']);
 
     // 看守 index.js档
-    gulp.watch('src/index/js/*.js', ['indexJs']);
+    gulp.watch('src/webapp/index/js/*.js', ['indexJs']);
 
     // 看守所有.js档
-    gulp.watch('src/**/js/*.js', ['js']);
+    gulp.watch('src/webapp/**/js/*.js', ['js']);
 
     // 看守所有.html
     gulp.watch('./*.html',['html']);

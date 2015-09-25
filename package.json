@@ -1,6 +1,6 @@
 {
-  "name": "panli-package",
-  "version": "1.0.0",
+  "name": "panli-webapp",
+  "version": "0.0.2",
   "description": "Panli 组件库",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "Panli by zan",
   "license": "MIT",
   "devDependencies": {
+    "bower": "^1.5.3",
     "browser-sync": "^2.9.3",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.1",
