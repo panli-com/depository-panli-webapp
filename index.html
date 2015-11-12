@@ -2,18 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/dist/images/favicon.ico"></head>
-    <title>panLi 移动端组件库</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./favicon.ico"></head>
+    <title> 移动端组件库</title>
     <!--<script src="http://sf.panli.com/Public/jQuery/jquery-1.7.2.min.js"></script>-->
     <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
     <script src="./dist/webapp/common/js/panli.js"></script>
     <!--<script src="http://res.layui.com/lay/lib/layer/src/layer.js?v=2.0"></script>-->
 
 </head>
+<style media="screen">
+  a{
+    color: #FFF;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-color: #008b57;
+    background-color: #009a61;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-image: -webkit-linear-gradient(top, #009a61 0%, #00905b 100%);
+    background-image: -o-linear-gradient(top, #009a61 0%, #00905b 100%);
+    background-image: linear-gradient(to bottom, #009a61 0%, #00905b 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF009A61', endColorstr='#FF00905B', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  }
+</style>
 <body>
-    <h1>panLi 移动端组件库</h1>
+
+
+    <a href="http://www.baidu.com"  style="">跳转a链接</a>
 </body>
 <script type="text/javascript">
-
+    $("a").on("click",function(){
+      Pan.open({
+          type: 2,
+          content: ''
+      });
+    })
 </script>
 </html>

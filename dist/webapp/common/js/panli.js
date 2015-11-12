@@ -172,7 +172,7 @@
         config.end && (ready.end[that.index] = config.end);
     };
 
-    var layer = {
+    var Pan = {
         v: '0.1',
         index: index,
 
@@ -228,10 +228,11 @@
     };
 
     'function' === typeof define ? define(function() {
-        return layer;
-    }) : win.Pan = layer;
+        return Pan;
+    }) : win.Pan = Pan;
 
 }(window);
+
 /*
 * 判断是否是pc
 * */
@@ -323,10 +324,6 @@ function getDateEnd(date) {
 //s20是代表20秒
 //h是指小时，如12小时则是：h12
 //d是天数，30天则：d30
-
-
-
-
 //var username=document.cookie.split(";")[0].split("=")[1];
 ////JS操作cookies方法!
 ////写cookies

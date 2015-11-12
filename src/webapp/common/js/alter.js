@@ -172,7 +172,7 @@
         config.end && (ready.end[that.index] = config.end);
     };
 
-    var layer = {
+    var Pan = {
         v: '0.1',
         index: index,
 
@@ -228,7 +228,7 @@
     };
 
     'function' === typeof define ? define(function() {
-        return layer;
-    }) : win.Pan = layer;
+        return Pan;
+    }) : win.Pan = Pan;
 
 }(window);

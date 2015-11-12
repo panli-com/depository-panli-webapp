@@ -89,10 +89,6 @@ function getDateEnd(date) {
 //s20是代表20秒
 //h是指小时，如12小时则是：h12
 //d是天数，30天则：d30
-
-
-
-
 //var username=document.cookie.split(";")[0].split("=")[1];
 ////JS操作cookies方法!
 ////写cookies
