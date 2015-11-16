@@ -108,7 +108,7 @@
         if(!config.type || config.type === 2){
             var dialogs = doc[claname](classs[0] + config.type), dialen = dialogs.length;
             if(dialen >= 1){
-                layer.close(dialogs[0].getAttribute('index'))
+                Pan.close(dialogs[0].getAttribute('index'))
             }
         }
 
@@ -126,7 +126,7 @@
         //自动关闭
         if(config.time){
             ready.timer[that.index] = setTimeout(function(){
-                layer.close(that.index);
+                Pan.close(that.index);
             }, config.time*1000);
         }
 
@@ -134,7 +134,7 @@
         if(config.title){
             var end = elem[claname]('layermend')[0], endfn = function(){
                 config.cancel && config.cancel();
-                layer.close(that.index);
+                Pan.close(that.index);
             };
             ready.touch(end, endfn);
             end.onclick = endfn;
@@ -145,9 +145,9 @@
             var type = this.getAttribute('type');
             if(type == 0){
                 config.no && config.no();
-                layer.close(that.index);
+                Pan.close(that.index);
             } else {
-                config.yes ? config.yes(that.index) : layer.close(that.index);
+                config.yes ? config.yes(that.index) : Pan.close(that.index);
             }
         };
         if(config.btn){
@@ -158,14 +158,14 @@
             }
         }
 
-        //点遮罩关闭
+        //点遮罩关闭 
         if(config.shade && config.shadeClose){
             var shade = elem[claname]('laymshade')[0];
             ready.touch(shade, function(){
-                layer.close(that.index, config.end);
+                Pan.close(that.index, config.end);
             });
             shade.onclick = function(){
-                layer.close(that.index, config.end);
+                Pan.close(that.index, config.end);
             };
         }
 
@@ -197,7 +197,7 @@
         closeAll: function(){
             var boxs = doc[claname](classs[0]);
             for(var i = 0, len = boxs.length; i < len; i++){
-                layer.close((boxs[0].getAttribute('index')|0));
+                Pan.close((boxs[0].getAttribute('index')|0));
             }
         },
         /* 谷歌统计代码 */
