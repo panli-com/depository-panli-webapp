@@ -173,9 +173,9 @@
     };
 
     var Pan = {
-        v: '0.1',
+        v: '0.0.4',
         index: index,
-
+        auth: 'zan',
         //核心方法
         open: function(options){
             var o = new Layer(options || {});
@@ -202,6 +202,12 @@
         },
         /* 谷歌统计代码 */
         googleCount:function(){
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            
+            loadjscssfile(gaJsHost+'google-analytics.com/ga.js','js');
+            
+            try { var pageTracker = _gat._getTracker("UA-436090-1"); pageTracker._trackPageview(); } catch (err) { };
+            
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                         (i[r].q = i[r].q || []).push(arguments)
@@ -212,7 +218,10 @@
             ga('create', 'UA-436090-2', 'auto');ga('require', 'displayfeatures');
             ga('send', 'pageview');
         },
-        /* rem 字体转换 */
+        googleCountBall:function () {
+            try { var pageTracker = _gat._getTracker("UA-436090-1"); pageTracker._trackPageview(); } catch (err) { };
+        },
+        /* rem 字体转换  */
         remFontSize:function(){
             var fontsize = function () {
                 var W = document.body.getBoundingClientRect().width, defaultW = 720, defaultSize = 40;
@@ -229,7 +238,7 @@
 
     'function' === typeof define ? define(function() {
         return Pan;
-    }) : win.Pan = Pan;
+    }) : win.PL = Pan;
 
 }(window);
 
@@ -353,6 +362,26 @@ function removeEle(removeObj) {
 };
 
 
+// JavaScript Document 
+function loadjscssfile(filename,filetype){
+
+    if(filetype == "js"){
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src",filename);
+    }else if(filetype == "css"){
+    
+        var fileref = document.createElement('link');
+        fileref.setAttribute("rel","stylesheet");
+        fileref.setAttribute("type","text/css");
+        fileref.setAttribute("href",filename);
+    }
+   if(typeof fileref != "undefined"){
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+    }
+    
+}
+
 /**
  * Created by Administrator on 2015/9/11.
  */
@@ -360,3 +389,120 @@ function removeEle(removeObj) {
 * 2015年9月14日15:29:04
 * 首页弹出框
 * */
+;(function(win, lib) {
+    var doc = win.document;
+    var docEl = doc.documentElement;
+    var metaEl = doc.querySelector('meta[name="viewport"]');
+    var flexibleEl = doc.querySelector('meta[name="flexible"]');
+    var dpr = 0;
+    var scale = 0;
+    var tid;
+    var flexible = lib.flexible || (lib.flexible = {});
+
+    if (metaEl) {
+        console.warn('将根据已有的meta标签来设置缩放比例');
+        var match = metaEl.getAttribute('content').match(/initial\-scale=([\d\.]+)/);
+        if (match) {
+            scale = parseFloat(match[1]);
+            dpr = parseInt(1 / scale);
+        }
+    } else if (flexibleEl) {
+        var content = flexibleEl.getAttribute('content');
+        if (content) {
+            var initialDpr = content.match(/initial\-dpr=([\d\.]+)/);
+            var maximumDpr = content.match(/maximum\-dpr=([\d\.]+)/);
+            if (initialDpr) {
+                dpr = parseFloat(initialDpr[1]);
+                scale = parseFloat((1 / dpr).toFixed(2));
+            }
+            if (maximumDpr) {
+                dpr = parseFloat(maximumDpr[1]);
+                scale = parseFloat((1 / dpr).toFixed(2));
+            }
+        }
+    }
+
+    if (!dpr && !scale) {
+        var isAndroid = win.navigator.appVersion.match(/android/gi);
+        var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {
+                dpr = 3;
+            } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+                dpr = 2;
+            } else {
+                dpr = 1;
+            }
+        } else {
+            // 其他设备下，仍旧使用1倍的方案
+            dpr = 1;
+        }
+        scale = 1 / dpr;
+    }
+
+    docEl.setAttribute('data-dpr', dpr);
+    if (!metaEl) {
+        metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+            docEl.firstElementChild.appendChild(metaEl);
+        } else {
+            var wrap = doc.createElement('div');
+            wrap.appendChild(metaEl);
+            doc.write(wrap.innerHTML);
+        }
+    }
+
+    function refreshRem(){
+        var width = docEl.getBoundingClientRect().width;
+        if (width / dpr > 540) {
+            width = 540 * dpr;
+        }
+        var rem = width / 10;
+        docEl.style.fontSize = rem + 'px';
+        flexible.rem = win.rem = rem;
+    }
+
+    win.addEventListener('resize', function() {
+        clearTimeout(tid);
+        tid = setTimeout(refreshRem, 300);
+    }, false);
+    win.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            clearTimeout(tid);
+            tid = setTimeout(refreshRem, 300);
+        }
+    }, false);
+
+    if (doc.readyState === 'complete') {
+        doc.body.style.fontSize = 12 * dpr + 'px';
+    } else {
+        doc.addEventListener('DOMContentLoaded', function(e) {
+            doc.body.style.fontSize = 12 * dpr + 'px';
+        }, false);
+    }
+
+
+    refreshRem();
+
+    flexible.dpr = win.dpr = dpr;
+    flexible.refreshRem = refreshRem;
+    flexible.rem2px = function(d) {
+        var val = parseFloat(d) * this.rem;
+        if (typeof d === 'string' && d.match(/rem$/)) {
+            val += 'px';
+        }
+        return val;
+    }
+    flexible.px2rem = function(d) {
+        var val = parseFloat(d) / this.rem;
+        if (typeof d === 'string' && d.match(/px$/)) {
+            val += 'rem';
+        }
+        return val;
+    }
+
+})(window, window['lib'] || (window['lib'] = {}));

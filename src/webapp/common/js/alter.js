@@ -173,9 +173,9 @@
     };
 
     var Pan = {
-        v: '0.1',
+        v: '0.0.4',
         index: index,
-
+        auth: 'zan',
         //核心方法
         open: function(options){
             var o = new Layer(options || {});
@@ -202,6 +202,12 @@
         },
         /* 谷歌统计代码 */
         googleCount:function(){
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            
+            loadjscssfile(gaJsHost+'google-analytics.com/ga.js','js');
+            
+            try { var pageTracker = _gat._getTracker("UA-436090-1"); pageTracker._trackPageview(); } catch (err) { };
+            
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                         (i[r].q = i[r].q || []).push(arguments)
@@ -212,7 +218,10 @@
             ga('create', 'UA-436090-2', 'auto');ga('require', 'displayfeatures');
             ga('send', 'pageview');
         },
-        /* rem 字体转换 */
+        googleCountBall:function () {
+            try { var pageTracker = _gat._getTracker("UA-436090-1"); pageTracker._trackPageview(); } catch (err) { };
+        },
+        /* rem 字体转换  */
         remFontSize:function(){
             var fontsize = function () {
                 var W = document.body.getBoundingClientRect().width, defaultW = 720, defaultSize = 40;
@@ -229,6 +238,6 @@
 
     'function' === typeof define ? define(function() {
         return Pan;
-    }) : win.Pan = Pan;
+    }) : win.PL = Pan;
 
 }(window);
