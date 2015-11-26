@@ -1,7 +1,7 @@
 ;!function(win){
     "use strict";
-
-    var path = ''; //所在路径，如果非模块加载不用配置
+    var version = '0.0.5'
+    var path = ''; //所在路径，如果非模块加载不用配置 
     path = path ? path : document.scripts[document.scripts.length-1].src.match(/[\s\S]*\//)[0];
 
     var doc = document, query = 'querySelectorAll', claname = 'getElementsByClassName', S = function(s){
@@ -11,7 +11,7 @@
 //插入css
     document.head.appendChild((function(){
         var link = doc.createElement('link');
-        link.href = path + 'skin/panli.min.css';
+        link.href = path + 'skin/panli.min.css?v='+version;
         link.type = 'text/css';
         link.rel = 'styleSheet'
         link.id = 'layermcss';
@@ -173,7 +173,7 @@
     };
 
     var Pan = {
-        v: '0.0.4',
+        v: version,
         index: index,
         auth: 'zan',
         //核心方法

@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./favicon.ico"></head>
     <title> 移动端组件库</title>
-    <!--<script src="http://sf.panli.com/Public/jQuery/jquery-1.7.2.min.js"></script>-->
     <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
-    <script src="./dist/webapp/common/js/panli.js"></script>
-    <!--<script src="http://res.layui.com/lay/lib/layer/src/layer.js?v=2.0"></script>-->
-
+    <script src="./dist/webapp/common/js/panli.min.js?v=0.0.5"></script>    
 </head>
 <style media="screen">
   a{
@@ -51,7 +48,7 @@
 </body>
 <script type="text/javascript">
     $("a").on("click",function(){
-      Pan.open({
+      PL.open({
           type: 2,
           content: ''
       });
