@@ -84,7 +84,7 @@
             return '<div class="layermbtn">'+ btndom + '</div>';
         }());
 
-        if(!config.fixed){
+        if(!config.fixed){ 
             config.top = config.hasOwnProperty('top') ?  config.top : 100;
             config.style = config.style || '';
             config.style += ' top:'+ ( doc.body.scrollTop + config.top) + 'px';

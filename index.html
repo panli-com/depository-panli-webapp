@@ -7,10 +7,10 @@
     <link rel="shortcut icon" href="./favicon.ico"></head>
     <title> 移动端组件库</title>
     <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
-    <script src="./dist/webapp/common/js/panli.min.js?v=0.0.5"></script>    
+    <script src="./build/webapp/common/js/panli.min.js?v=0.0.5"></script>    
 </head>
 <style media="screen">
-  a{
+  .btoom-a{
     color: #FFF;
     display: inline-block;
     margin-bottom: 0;
@@ -44,14 +44,41 @@
 <body>
 
 
-    <a href="http://www.baidu.com"  style="">跳转a链接</a>
+    <a class="btoom-a" id="loading">加载层</a><br/><br/>
+    
+    <a class="btoom-a" id="ask">询问框</a><br/><br/>
+    
+    <a class="btoom-a" id="message">信息框</a>
+    
+   
+
 </body>
 <script type="text/javascript">
-    $("a").on("click",function(){
+    $("#loading").on("click",function(){
       PL.open({
           type: 2,
           content: ''
       });
     })
+    
+    
+    $("#ask").on("click",function(){
+        PL.open({            
+            content: '您确定要刷新一下本页面吗？',
+            btn: ['嗯', '不要'],
+            yes: function(index){
+                location.reload();
+                PL.close(index);
+            }
+        });
+    })
+    
+    
+    $("#message").on("click",function(){
+         PL.open({
+            content: 'Panli 您好',
+            time: 3
+        })        
+     })
 </script>
 </html>

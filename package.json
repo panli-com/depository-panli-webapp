@@ -1,6 +1,6 @@
 {
   "name": "panli-webapp",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Panli 组件库",
   "main": "index.js",
   "scripts": {
